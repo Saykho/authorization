@@ -1,7 +1,6 @@
 import React from "react";
 import { useAppSelector } from "../../hooks/hooks";
-import { Link } from "react-router-dom";
-import "./Profile.scss";
+import styled from "styled-components";
 
 export function Profile() {
     const user = useAppSelector(state => state.user.user);
@@ -9,10 +8,22 @@ export function Profile() {
     return (
         <>
             {user && (
-                <div className="user">
-                    <div className="user__data">{user.name} - {user.age} лет</div>
-                </div>
+                <User>
+                    <UserData>{user.name} - {user.age} лет</UserData>
+                </User>
             )}
         </>
     );
 }
+
+const User = styled.div`
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const UserData = styled.div`
+  font-size: 150%;
+  font-weight: bold;
+`;

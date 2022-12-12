@@ -1,8 +1,9 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { logout as userLogout } from "../../state/user/user-slice";
 import "./Navigation.scss";
+import styled from "styled-components";
 
 export function Navigation() {
     const dispatch = useAppDispatch();
@@ -12,9 +13,8 @@ export function Navigation() {
     const user = useAppSelector(state => state.user.user);
 
     return (
-        <div className="navigation">
-            <header>
-                <ul className="navigation__header">
+        <NavigationContent>
+                <Header>
                     <NavLink to="/" className={({isActive}) => `header-link ${isActive ? 'active' : ''}`}>
                         <li>На главную</li>
                     </NavLink>
@@ -27,8 +27,22 @@ export function Navigation() {
                     <NavLink to="/login" className={({isActive}) => `header-link ${isActive ? 'active' : ''}`}>
                         {user ? <li onClick={logout}>Выйти</li> : <li>Войти</li>}
                     </NavLink>
-                </ul>
-            </header>
-        </div>
+                </Header>
+        </NavigationContent>
     );
 }
+
+const NavigationContent = styled.div`
+  width: 100%;
+  padding: 10px 20px;
+  border-bottom: 1px solid #9d9c9c;
+  background: #f1f4f6;
+`;
+
+const Header = styled.ul`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+`;

@@ -10,6 +10,8 @@ import { selectIsUserLoading } from "./state/user/user-slice";
 import { Loader } from "./components/Loader/Loader";
 import { selectIsNewsLoading } from "./state/news/news-slice";
 import { Navigation } from "./components/Navigation/Navigation";
+import { GuardedRoute } from "./components/GuardedRoute/GuardedRoute";
+import styled from "styled-components";
 
 function App() {
     const navigate = useNavigate();
@@ -27,17 +29,23 @@ function App() {
     }, [user]);
 
     return (
-        <>
+        <AppComponent>
             <Navigation/>
             <Routes>
-                <Route path="/" element={<MainPage/>}/>
-                <Route path="/news" element={<News/>}/>
-                <Route path="/profile" element={<Profile/>}/>
+                <Route path="/" element={<GuardedRoute children={<MainPage/>}/>}/>
+                <Route path="/news" element={<GuardedRoute children={<News/>}/>}/>
+                <Route path="/profile" element={<GuardedRoute children={<Profile/>}/>}/>
                 <Route path="/login" element={<Login/>}/>
             </Routes>
             <Loader isShow={isLoading}/>
-        </>
+        </AppComponent>
     );
 }
+
+const AppComponent = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`
 
 export default App;
